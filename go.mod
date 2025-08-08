@@ -1,4 +1,4 @@
-module spm2
+module restfull_api
 
 go 1.24.4
 

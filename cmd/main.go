@@ -3,13 +3,16 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"spm2/internal/handler/auth"
+	"restfull_api/configs"
+	"restfull_api/internal/handler/auth"
 )
 
 func main() {
-	//conf := configs.LoadConfig()
+	conf := configs.LoadConfig()
 	router := http.NewServeMux()
-	auth.NewAuthHandler(router)
+	auth.NewAuthHandler(router, auth.AuthHandlerDeps{
+		Config: conf,
+	})
 
 	server := http.Server{
 		Addr:    ":8081",
