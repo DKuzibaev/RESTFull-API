@@ -36,6 +36,16 @@ func (handler *AuthHandler) Login() http.HandlerFunc {
 		err := json.NewDecoder(r.Body).Decode(&payload)
 		if err != nil {
 			resp.Json(w, err.Error(), 402)
+			return
+		}
+		if payload.Email == "" {
+			resp.Json(w, "Email required", 402)
+			return
+		}
+
+		if payload.Password == "" {
+			resp.Json(w, "Password required", 402)
+			return
 		}
 
 		fmt.Println(payload)
