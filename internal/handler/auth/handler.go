@@ -1,13 +1,11 @@
 package auth
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"restfull_api/configs"
+	"restfull_api/pkg/req"
 	"restfull_api/pkg/resp"
-
-	"github.com/go-playground/validator/v10"
 )
 
 type AuthHandlerDeps struct {
@@ -28,26 +26,22 @@ func NewAuthHandler(router *http.ServeMux, deps AuthHandlerDeps) {
 
 func (handler *AuthHandler) Register() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("Register")
+		body, err := req.HandleBody[RegisterRequest](&w, r)
+		if err != nil {
+			return
+		}
+
+		fmt.Println(body)
 	}
 }
 
 func (handler *AuthHandler) Login() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var payload LoginRequest
-		err := json.NewDecoder(r.Body).Decode(&payload)
+		body, err := req.HandleBody[LoginRequest](&w, r)
 		if err != nil {
-			resp.Json(w, err.Error(), 402)
 			return
 		}
-		validate := validator.New()
-		err = validate.Struct(payload)
-		if err != nil {
-			resp.Json(w, err.Error(), 402)
-			return
-		}
-
-		fmt.Println(payload)
+		fmt.Println(body)
 		data := LoginResponce{
 			Token: "123",
 		}
