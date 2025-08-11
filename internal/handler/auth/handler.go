@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"restfull_api/configs"
 	"restfull_api/pkg/resp"
+
+	"github.com/go-playground/validator/v10"
 )
 
 type AuthHandlerDeps struct {
@@ -38,13 +40,10 @@ func (handler *AuthHandler) Login() http.HandlerFunc {
 			resp.Json(w, err.Error(), 402)
 			return
 		}
-		if payload.Email == "" {
-			resp.Json(w, "Email required", 402)
-			return
-		}
-
-		if payload.Password == "" {
-			resp.Json(w, "Password required", 402)
+		validate := validator.New()
+		err = validate.Struct(payload)
+		if err != nil {
+			resp.Json(w, err.Error(), 402)
 			return
 		}
 
