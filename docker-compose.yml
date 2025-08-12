@@ -1,0 +1,13 @@
+services:
+  postgres:
+    container_name: pg_go
+    image: postgres:14.18
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: 12345
+      PGDATA: /data/postgres
+    volumes:
+      - ./pg_data:/data/postgres
+    ports:
+      - "5432:5432"

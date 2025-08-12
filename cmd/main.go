@@ -5,10 +5,12 @@ import (
 	"net/http"
 	"restfull_api/configs"
 	"restfull_api/internal/handler/auth"
+	"restfull_api/pkg/db"
 )
 
 func main() {
 	conf := configs.LoadConfig()
+	_ = db.NewDb(conf)
 	router := http.NewServeMux()
 	auth.NewAuthHandler(router, auth.AuthHandlerDeps{
 		Config: conf,
