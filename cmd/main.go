@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"restfull_api/configs"
-	"restfull_api/internal/handler/auth"
+	"restfull_api/internal/auth"
 	"restfull_api/pkg/db"
 )
 

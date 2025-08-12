@@ -15,7 +15,7 @@ func NewDb(conf *configs.Config) *Db {
 	// Подключение к базе данных
 	db, err := gorm.Open(postgres.Open(conf.Db.Dsn), &gorm.Config{})
 	if err != nil {
-		panic("failed to connect database")
+		panic(err)
 	}
 	return &Db{db}
 }
