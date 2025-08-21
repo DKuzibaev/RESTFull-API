@@ -1,6 +1,8 @@
 package link
 
-import "restfull_api/pkg/db"
+import (
+	"restfull_api/pkg/db"
+)
 
 type LinkRepository struct {
 	DataBase *db.Db
